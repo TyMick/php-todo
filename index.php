@@ -13,7 +13,7 @@ try {
 if (isset($_POST["new-task"])) {
   try {
     $insert = $pdo->prepare(
-      "INSERT INTO Todos (Task, Complete, Created) VALUES (:task, FALSE, strftime('%s', 'now'))"
+      "INSERT INTO Todos (Task, Complete, Created) VALUES (:task, 0, strftime('%s', 'now'))"
     );
     $insert->execute([":task" => $_POST["new-task"]]);
   } catch (PDOException $e) {
