@@ -1,5 +1,4 @@
 <?php
-
 // Connect to the database
 try {
   $pdo = new PDO("sqlite:db/todos.db");
@@ -31,13 +30,14 @@ if (isset($_POST["new-task"])) {
 
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <!-- prettier-ignore -->
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/7f1bac7050.js" crossorigin="anonymous"></script>
     <title>PHP todo list – Ty Mick</title>
   </head>
 
@@ -45,13 +45,51 @@ if (isset($_POST["new-task"])) {
     <div class="container">
       <div class="card my-4">
         <div class="card-body">
+          <!-- Title -->
           <h1 class="mb-4">PHP todo list</h1>
 
           <!-- Input form -->
-          <form class="form-inline" method="post" action="">
-            <input type="text" class="form-control mb-2 mr-sm-2" name="new-task" aria-label="New task" />
-            <button type="submit" class="btn btn-primary mb-2">Add</button>
+          <form class="d-flex mb-4" method="post" action="">
+            <input
+              type="text"
+              class="form-control mr-2"
+              name="new-task"
+              aria-label="New task"
+            />
+            <button type="submit" class="btn btn-primary">Add</button>
           </form>
+
+          <!-- Task list -->
+          <ul class="list-group">
+<?php
+// List incomplete tasks first, then in decending order by date
+$statement = $pdo->prepare("SELECT * FROM Todos ORDER BY Complete ASC, Completed DESC, Created DESC");
+$statement->execute();
+
+foreach ($statement as $todo) {
+  $task = $todo["Task"];
+  $complete = $todo["Complete"];
+?>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <!-- Task -->
+              <?= $complete ? '<del class="text-secondary">' : ''; ?>
+                <?= $task; ?>
+              <?= $complete ? '</del>' : ''; ?>
+
+              <!-- Complete/delete buttons -->
+              <div class="btn-group" role="group" aria-label="Task actions">
+                <button type="button" class="btn btn-success<?= $complete ? ' active' : ''; ?>"<?= $complete ? ' aria-pressed="true"' : ''; ?> aria-label="Complete">
+                  <i class="fas fa-check fa-fw"></i>
+                </button>
+                <button type="button" class="btn btn-danger" aria-label="Delete">
+                  <i class="fas fa-trash-alt fa-fw"></i>
+                </button>
+              </div>
+            </li>
+<?php
+}
+?>
+          </ul>
         </div>
       </div>
     </div>
