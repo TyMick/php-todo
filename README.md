@@ -5,4 +5,5 @@ This project also uses [prepared statements](https://en.wikipedia.org/wiki/Prepa
 Hope you enjoy this demo, and [let me know](https://tymick.me/connect) if you have any questions!
 
 Sincerely,
+
 [Ty](http://tymick.me)
