@@ -3,7 +3,7 @@
 try {
   $pdo = new PDO("sqlite:db/todos.db");
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
+  $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 } catch (PDOException $e) {
   echo "Connection failed: " . $e->getMessage();
 }
@@ -12,22 +12,57 @@ try {
 // Create new todo
 if (isset($_POST["new-task"])) {
   try {
-    $task = $_POST["new-task"];
-    $statement = $pdo->prepare(
+    $insert = $pdo->prepare(
       "INSERT INTO Todos (Task, Complete, Created) VALUES (:task, FALSE, strftime('%s', 'now'))"
     );
-    $statement->execute([":task" => $task]);
+    $insert->execute([":task" => $_POST["new-task"]]);
   } catch (PDOException $e) {
-    echo "Todo creation failed: " . $e->getMessage()();
+    echo "Todo creation failed: " . $e->getMessage();
   }
 }
 
 // Complete todo
+if (isset($_POST["complete"])) {
+  try {
+    $update = $pdo->prepare(
+      "UPDATE Todos SET Complete = TRUE, Completed = strftime('%s', 'now') WHERE id = :id"
+    );
+    $update->execute([":id" => $_POST["id"]]);
+  } catch (PDOException $e) {
+    echo "Todo completion failed: " . $e->getMessage();
+  }
+}
+
+// Uncomplete todo
+if (isset($_POST["uncomplete"])) {
+  try {
+    $update = $pdo->prepare(
+      "UPDATE Todos SET Complete = FALSE, Completed = NULL WHERE id = :id"
+    );
+    $update->execute([":id" => $_POST["id"]]);
+  } catch (PDOException $e) {
+    echo "Todo uncompletion failed: " . $e->getMessage();
+  }
+}
 
 // Delete one todo
+if (isset($_POST["delete-one"])) {
+  try {
+    $delete = $pdo->prepare("DELETE FROM Todos WHERE id = :id");
+    $delete->execute([":id" => $_POST["id"]]);
+  } catch (PDOException $e) {
+    echo "Todo deletion failed: " . $e->getMessage();
+  }
+}
 
 // Delete all todos
-
+if (isset($_POST["delete-all"])) {
+  try {
+    $pdo->query("DELETE FROM Todos");
+  } catch (PDOException $e) {
+    echo "Todo deletion failed: " . $e->getMessage();
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,14 +77,14 @@ if (isset($_POST["new-task"])) {
   </head>
 
   <body style="background-color: #dee2e6;">
-    <div class="container">
+    <div class="container-fluid" style="max-width: 720px;">
       <div class="card my-4">
         <div class="card-body">
           <!-- Title -->
           <h1 class="mb-4">PHP todo list</h1>
 
           <!-- Input form -->
-          <form class="d-flex mb-4" method="post" action="">
+          <form class="d-flex mb-4" method="POST">
             <input
               type="text"
               class="form-control mr-2"
@@ -63,28 +98,54 @@ if (isset($_POST["new-task"])) {
           <ul class="list-group mb-4">
 <?php
 // List incomplete tasks first, then in decending order by date
-$statement = $pdo->prepare("SELECT * FROM Todos ORDER BY Complete ASC, Completed DESC, Created DESC");
-$statement->execute();
+$select = $pdo->query(
+  "SELECT * FROM Todos ORDER BY Complete ASC, Completed DESC, Created DESC"
+);
 
-foreach ($statement as $todo) {
+// Find task count while looping
+$count = 0;
+
+// Loop through tasks
+foreach ($select as $todo) {
+  $count++;
+  $id = $todo["id"];
   $task = $todo["Task"];
   $complete = $todo["Complete"];
 ?>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <li 
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
               <!-- Task -->
               <?= $complete ? '<del class="text-secondary">' : ''; ?>
                 <?= $task; ?>
               <?= $complete ? '</del>' : ''; ?>
 
               <!-- Complete/delete buttons -->
-              <div class="btn-group" role="group" aria-label="Task actions">
-                <button type="button" class="btn btn-success<?= $complete ? ' active' : ''; ?>"<?= $complete ? ' aria-pressed="true"' : ''; ?> aria-label="Complete">
+              <form
+                class="btn-group"
+                role="group"
+                aria-label="Task actions"
+                method="POST"
+              >
+                <button
+                  type="submit"
+                  name="<?= $complete ? 'un' : ''; ?>complete"
+                  class="btn btn-success<?= $complete ? ' active' : ''; ?>"
+                  <?= $complete ? ' aria-pressed="true"' : ''; ?>
+                  aria-label="Complete"
+                >
                   <i class="fas fa-check fa-fw"></i>
                 </button>
-                <button type="button" class="btn btn-danger" aria-label="Delete">
+                <input type="hidden" name="id" value="<?= $id; ?>" />
+                <button
+                  type="submit"
+                  name="delete-one"
+                  class="btn btn-danger"
+                  aria-label="Delete"
+                >
                   <i class="fas fa-trash-alt fa-fw"></i>
                 </button>
-              </div>
+              </form>
             </li>
 <?php
 }
@@ -92,9 +153,15 @@ foreach ($statement as $todo) {
           </ul>
 
           <!-- Delete all tasks button -->
-          <button type="button" class="btn btn-danger px-5 d-block mx-auto">
-            DELETE ALL TASKS
-          </button>
+          <form method="POST">
+            <button
+              type="submit"
+              name="delete-all"
+              class="btn btn-danger px-5 d-block mx-auto"<?= $count === 0 ? ' disabled' : ''; ?>
+            >
+              DELETE ALL TASKS
+            </button>
+          </form>
         </div>
       </div>
     </div>
