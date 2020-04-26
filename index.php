@@ -25,7 +25,7 @@ if (isset($_POST["new-task"])) {
 if (isset($_POST["complete"])) {
   try {
     $update = $pdo->prepare(
-      "UPDATE Todos SET Complete = TRUE, Completed = strftime('%s', 'now') WHERE id = :id"
+      "UPDATE Todos SET Complete = 1, Completed = strftime('%s', 'now') WHERE id = :id"
     );
     $update->execute([":id" => $_POST["id"]]);
   } catch (PDOException $e) {
@@ -37,7 +37,7 @@ if (isset($_POST["complete"])) {
 if (isset($_POST["uncomplete"])) {
   try {
     $update = $pdo->prepare(
-      "UPDATE Todos SET Complete = FALSE, Completed = NULL WHERE id = :id"
+      "UPDATE Todos SET Complete = 0, Completed = NULL WHERE id = :id"
     );
     $update->execute([":id" => $_POST["id"]]);
   } catch (PDOException $e) {
