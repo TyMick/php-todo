@@ -60,7 +60,7 @@ if (isset($_POST["new-task"])) {
           </form>
 
           <!-- Task list -->
-          <ul class="list-group">
+          <ul class="list-group mb-4">
 <?php
 // List incomplete tasks first, then in decending order by date
 $statement = $pdo->prepare("SELECT * FROM Todos ORDER BY Complete ASC, Completed DESC, Created DESC");
@@ -90,6 +90,11 @@ foreach ($statement as $todo) {
 }
 ?>
           </ul>
+
+          <!-- Delete all tasks button -->
+          <button type="button" class="btn btn-danger px-5 d-block mx-auto">
+            DELETE ALL TASKS
+          </button>
         </div>
       </div>
     </div>
