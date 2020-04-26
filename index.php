@@ -78,10 +78,14 @@ if (isset($_POST["delete-all"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <script src="https://kit.fontawesome.com/7f1bac7050.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Dawning+of+a+New+Day&display=swap" rel="stylesheet" />
     <title>PHP todo list – Ty Mick</title>
   </head>
 
-  <body style="background-color: #dee2e6;">
+  <body
+    class="d-flex flex-column position-absolute"
+    style="min-height: 100%; width: 100%; background-color: #dee2e6;"
+  >
     <div class="container-fluid" style="max-width: 720px;">
       <div class="card my-4">
         <div class="card-body">
@@ -169,6 +173,70 @@ foreach ($select as $todo) {
           </form>
         </div>
       </div>
+
+      <!-- Explanation -->
+      <p class="lead font-italic">
+        View the source on
+        <a href="https://github.com/tywmick/php-todo">Github</a>.
+      </p>
+
+      <p>
+        Just wrote my first line of PHP two days ago, and here's my first
+        project! Simple todo app with a
+        <a href="https://www.sqlite.org/index.html">SQLite</a> database (this is
+        coincidentally also my first SQL project). You can add new tasks, mark
+        tasks complete, "uncomplete" tasks, and delete them, too. The task list
+        is arranged so that incomplete tasks show up first; incomplete tasks are
+        then arranged in descending order of creation date, and completed tasks
+        are arranged in descending order of <em>completion</em> date.
+      </p>
+      <p>
+        This project also uses
+        <a href="https://en.wikipedia.org/wiki/Prepared_statement"
+          >prepared statements</a
+        >
+        to guard against SQL injection.
+      </p>
+
+      <p>
+        Hope you enjoy this demo, and
+        <a href="https://tymick.me/connect">let me know</a> if you have any
+        questions!
+      </p>
+
+      <p>Sincerely,</p>
+      <div
+        class="display-1 mb-4"
+        style="font-family: 'Dawning of a New Day', cursive;"
+      >
+        <a class="text-reset text-decoration-none" href="http://tymick.me">
+          Ty
+        </a>
+      </div>
     </div>
+
+    <!-- Creative Commons license -->
+    <footer class="text-center mt-auto mb-3">
+      <a
+        rel="license"
+        href="http://creativecommons.org/licenses/by/4.0/"
+        title="Creative Commons Attribution 4.0 International License"
+        class="text-reset text-decoration-none"
+      >
+        <i class="fab fa-creative-commons"></i>&#x0200A;<i
+          class="fab fa-creative-commons-by"
+        ></i>
+      </a>
+      2020
+      <a
+        href="http://tymick.me"
+        xmlns:cc="http://creativecommons.org/ns#"
+        property="cc:attributionName"
+        rel="cc:attributionURL"
+        class="text-reset text-decoration-none"
+      >
+        Tyler&nbsp;Westin&nbsp;Mick
+      </a>
+    </footer>
   </body>
 </html>
