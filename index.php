@@ -2,8 +2,9 @@
 
 // Connect to the database
 try {
-  $pdo = new \PDO("sqlite:db/todos.db");
+  $pdo = new PDO("sqlite:db/todos.db");
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
 } catch (PDOException $e) {
   echo "Connection failed: " . $e->getMessage();
 }
@@ -11,11 +12,15 @@ try {
 /// User actions
 // Create new todo
 if (isset($_POST["new-task"])) {
-  $task = $_POST["new-task"];
-  $statement = $pdo->prepare(
-    "INSERT INTO Todos (Task, Complete, Created) VALUES (:task, FALSE, strftime('%s', 'now'))"
-  );
-  $statement->execute([":task" => $task]);
+  try {
+    $task = $_POST["new-task"];
+    $statement = $pdo->prepare(
+      "INSERT INTO Todos (Task, Complete, Created) VALUES (:task, FALSE, strftime('%s', 'now'))"
+    );
+    $statement->execute([":task" => $task]);
+  } catch (PDOException $e) {
+    echo "Todo creation failed: " . $e->getMessage()();
+  }
 }
 
 // Complete todo
