@@ -4,11 +4,6 @@ try {
   $pdo = new PDO("sqlite:todos.db");
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
-  // Create table if necessary
-  $pdo->query(
-    "CREATE TABLE IF NOT EXISTS Todos (id INTEGER PRIMARY KEY, Task TEXT, Complete INTEGER, Created INTEGER, Completed INTEGER)"
-  );
 } catch (PDOException $e) {
   echo "Connection failed: " . $e->getMessage();
 }
