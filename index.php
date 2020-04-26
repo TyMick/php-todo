@@ -1,16 +1,29 @@
 <?php
 
 // Connect to the database
-$pdo = new \PDO("sqlite:db/sqlite.db");
+try {
+  $pdo = new \PDO("sqlite:db/todos.db");
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+  echo "Connection failed: " . $e->getMessage();
+}
 
 /// User actions
-// Create todo
+// Create new todo
+if (isset($_POST["new-task"])) {
+  $task = $_POST["new-task"];
+  $statement = $pdo->prepare(
+    "INSERT INTO Todos (Task, Complete, Created) VALUES (:task, FALSE, strftime('%s', 'now'))"
+  );
+  $statement->execute([":task" => $task]);
+}
 
 // Complete todo
 
-// Delete todo
+// Delete one todo
 
 // Delete all todos
+
 ?>
 
 <!doctype html>
@@ -25,13 +38,13 @@ $pdo = new \PDO("sqlite:db/sqlite.db");
 
   <body style="background-color: #dee2e6;">
     <div class="container">
-      <div class="card my-5">
+      <div class="card my-4">
         <div class="card-body">
           <h1 class="mb-4">PHP todo list</h1>
 
           <!-- Input form -->
-          <form class="form-inline" method="post">
-            <input type="text" class="form-control mb-2 mr-sm-2" id="task" aria-label="Task" />
+          <form class="form-inline" method="post" action="">
+            <input type="text" class="form-control mb-2 mr-sm-2" name="new-task" aria-label="New task" />
             <button type="submit" class="btn btn-primary mb-2">Add</button>
           </form>
         </div>
