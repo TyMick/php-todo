@@ -1,2 +1,4 @@
 <?php
-require "vendor/autoload.php";
+
+// Connect to the database
+$pdo = new \PDO("sqlite:db/sqlite.db");
