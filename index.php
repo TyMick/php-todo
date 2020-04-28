@@ -140,7 +140,7 @@ foreach ($select as $todo) {
                   type="submit"
                   name="<?= $complete ? 'un' : ''; ?>complete"
                   class="btn btn-success<?= $complete ? ' active' : ''; ?>"
-                  <?= $complete ? ' aria-pressed="true"' : ''; ?>
+                  <?= $complete ? 'aria-pressed="true"' : ''; ?>
                   aria-label="Complete"
                 >
                   <i class="fas fa-check fa-fw"></i>
