@@ -79,7 +79,7 @@ if (isset($_POST["delete-all"])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <script src="https://kit.fontawesome.com/7f1bac7050.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Dawning+of+a+New+Day&display=swap" rel="stylesheet" />
-    <title>PHP todo list – Ty Mick</title>
+    <title>PHP to-do list – Ty Mick</title>
   </head>
 
   <body
@@ -90,7 +90,7 @@ if (isset($_POST["delete-all"])) {
       <div class="card my-4">
         <div class="card-body">
           <!-- Title -->
-          <h1 class="mb-4">PHP todo list</h1>
+          <h1 class="mb-4">PHP to-do list</h1>
 
           <!-- Input form -->
           <form class="d-flex mb-4" method="POST">
@@ -182,7 +182,7 @@ foreach ($select as $todo) {
 
       <p>
         Just wrote my first line of PHP two days ago, and here's my first
-        project! Simple todo app with a
+        project! Simple to-do list app with a
         <a href="https://www.sqlite.org/index.html">SQLite</a> database (this is
         coincidentally also my first SQL project). You can add new tasks, mark
         tasks complete, "uncomplete" tasks, and delete them, too. The task list
