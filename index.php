@@ -197,6 +197,11 @@ foreach ($select as $todo) {
         >
         to guard against SQL injection.
       </p>
+      <p>
+        Quick, simple design was accomplished with the help of
+        <a href="https://getbootstrap.com/">Bootstrap</a> and
+        <a href="https://fontawesome.com/">Font Awesome</a>.
+      </p>
 
       <p>
         Hope you enjoy this demo, and

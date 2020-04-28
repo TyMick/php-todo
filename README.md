@@ -2,6 +2,8 @@ Just wrote my first line of PHP two days ago, and here's my first project! Simpl
 
 This project also uses [prepared statements](https://en.wikipedia.org/wiki/Prepared_statement) to guard against SQL injection.
 
+Quick, simple design was accomplished with the help of [Bootstrap](https://getbootstrap.com/) and [Font Awesome](https://fontawesome.com/).
+
 Hope you enjoy this demo, and [let me know](https://tymick.me/connect) if you have any questions!
 
 Sincerely,
