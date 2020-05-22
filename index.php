@@ -181,14 +181,15 @@ foreach ($select as $todo) {
       </p>
 
       <p>
-        Just wrote my first line of PHP two days ago, and here's my first
-        project! Simple to-do list app with a
-        <a href="https://www.sqlite.org/index.html">SQLite</a> database (this is
-        coincidentally also my first SQL project). You can add new tasks, mark
-        tasks complete, "uncomplete" tasks, and delete them, too. The task list
-        is arranged so that incomplete tasks show up first; incomplete tasks are
-        then arranged in descending order of creation date, and completed tasks
-        are arranged in descending order of <em>completion</em> date.
+        Just wrote my first line of PHP two days ago (April 24, 2020, in case
+        you're reading this later), and here's my first project! Simple to-do
+        list app with a <a href="https://www.sqlite.org/index.html">SQLite</a>
+        database (this is coincidentally also my first SQL project). You can add
+        new tasks, mark tasks complete, "uncomplete" tasks, and delete them,
+        too. The task list is arranged so that incomplete tasks show up first;
+        incomplete tasks are then arranged in descending order of creation date,
+        and completed tasks are arranged in descending order of
+        <em>completion</em> date.
       </p>
       <p>
         This project also uses
